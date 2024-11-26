@@ -2,7 +2,8 @@ import * as React from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import { useLinkBuilder, useTheme } from '@react-navigation/native';
 import { PlatformPressable } from '@react-navigation/elements';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/bottom-tabs';
+import { ParamListBase, TabNavigationState, RouteProp } from '@react-navigation/native';
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
 import Favourites from '../screens/Favourites';
@@ -10,12 +11,19 @@ import Shop from '../screens/Shop';
 import icons from '../constants/icons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 
-function MyTabBar({ state, descriptors, navigation }) {
+// Define the props for MyTabBar
+type MyTabBarProps = BottomTabBarProps & {
+  state: TabNavigationState<ParamListBase>;
+  descriptors: Record<string, any>;
+  navigation: any;
+};
+
+const MyTabBar: React.FC<MyTabBarProps> = ({ state, descriptors, navigation }) => {
   const { colors } = useTheme();
   const { buildHref } = useLinkBuilder();
 
   // Map tab names to their corresponding icons
-  const tabIcons = {
+  const tabIcons: Record<string, any> = {
     Home: icons.HomeBottomTabIcon,
     Favourites: icons.FavouriteBottomTabIcon,
     Shop: icons.ShopBottomTabIcon,
@@ -57,7 +65,7 @@ function MyTabBar({ state, descriptors, navigation }) {
               onPress={onPress}
               onLongPress={onLongPress}
               style={styles.tabItem}
-              key={index}
+              key={route.key}
             >
               <View
                 style={[
@@ -80,7 +88,7 @@ function MyTabBar({ state, descriptors, navigation }) {
       </View>
     </View>
   );
-}
+};
 
 export default MyTabBar;
 
@@ -138,7 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFEB3B', // Highlight color (e.g., yellow background)
     padding: responsiveWidth(1.5),
     borderRadius: responsiveWidth(10),
-    marginBottom: responsiveHeight(1)
+    marginBottom: responsiveHeight(1),
   },
   icon: {
     width: responsiveWidth(6),
