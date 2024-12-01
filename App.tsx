@@ -1,13 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import StackNavigator from './src/routes/StackNavigator';
 import CustomDrawer from './src/routes/CustomDrawer';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
+import SplashScreen from 'react-native-splash-screen';
 
 const Drawer = createDrawerNavigator();
 
 const App: React.FC = () => {
+  
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <NavigationContainer>
       <Drawer.Navigator
