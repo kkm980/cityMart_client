@@ -3,17 +3,24 @@ import {
   View,
   Text,
   SafeAreaView,
-  Image,
-  TouchableOpacity,
   TextInput,
+  TouchableOpacity,
   StyleSheet,
+  TextStyle,
+  ViewStyle,
+  ImageStyle,
 } from 'react-native';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { DrawerContentScrollView, DrawerContentComponentProps } from '@react-navigation/drawer';
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 
-const CustomDrawer = (props) => {
-  const navigation = useNavigation();
+// Define navigation type
+type NavigationType = {
+  navigate: (screen: string) => void;
+};
+
+const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
+  const navigation = useNavigation<NavigationType>();
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={styles.drawerContainer}>
@@ -26,34 +33,18 @@ const CustomDrawer = (props) => {
         {/* Menu Items */}
         <View style={styles.menuItemsContainer}>
           <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={styles.menuItem}>
-            {/* <Image
-              source={require('../assets/icons/shop.png')}
-              style={styles.menuIcon}
-            /> */}
             <Text style={styles.menuText}>Shop</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate('Community')} style={styles.menuItem}>
-            {/* <Image
-              source={require('../assets/icons/community.png')}
-              style={styles.menuIcon}
-            /> */}
             <Text style={styles.menuText}>Community</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate('MyAccount')} style={styles.menuItem}>
-            {/* <Image
-              source={require('../assets/icons/account.png')}
-              style={styles.menuIcon}
-            /> */}
             <Text style={styles.menuText}>My Account</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => navigation.navigate('TrackOrder')} style={styles.menuItem}>
-            {/* <Image
-              source={require('../assets/icons/track-order.png')}
-              style={styles.menuIcon}
-            /> */}
             <Text style={styles.menuText}>Track Order</Text>
           </TouchableOpacity>
         </View>
@@ -85,7 +76,24 @@ const CustomDrawer = (props) => {
   );
 };
 
-const styles = StyleSheet.create({
+// Define styles with proper typing
+interface Styles {
+  drawerContainer: ViewStyle;
+  safeArea: ViewStyle;
+  closeButton: ViewStyle;
+  closeIcon: TextStyle;
+  menuItemsContainer: ViewStyle;
+  menuItem: ViewStyle;
+  menuText: TextStyle;
+  emailSection: ViewStyle;
+  emailLabel: TextStyle;
+  emailInput: TextStyle;
+  footerContainer: ViewStyle;
+  footerLink: ViewStyle;
+  footerText: TextStyle;
+}
+
+const styles = StyleSheet.create<Styles>({
   drawerContainer: {
     flex: 1,
     backgroundColor: '#1E9650', // Green background
@@ -111,12 +119,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: responsiveHeight(2),
     paddingHorizontal: responsiveWidth(6),
-  },
-  menuIcon: {
-    width: responsiveWidth(6),
-    height: responsiveHeight(3),
-    marginRight: responsiveWidth(4),
-    tintColor: '#FFFFFF', // White icon color
   },
   menuText: {
     fontSize: responsiveFontSize(2),
