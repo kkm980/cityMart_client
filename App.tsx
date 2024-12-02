@@ -9,9 +9,11 @@ import SplashScreen from 'react-native-splash-screen';
 const Drawer = createDrawerNavigator();
 
 const App: React.FC = () => {
-  
+
   useEffect(() => {
-    SplashScreen.hide();
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 1000);
   }, []);
 
   return (

@@ -1,15 +1,27 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity, ImageSourcePropType } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageSourcePropType, StatusBar } from 'react-native';
 import {
     responsiveHeight,
     responsiveWidth,
     responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 import Icons from '../constants/icons';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../routes/StackNavigator';
+import colors from '../constants/colors';
+
+
+type WelcomeScreenNavigationProp = StackNavigationProp<
+    RootStackParamList,
+    "Welcome"
+>;
 
 const Welcome = () => {
+    const navigation = useNavigation<WelcomeScreenNavigationProp>();
     return (
         <View style={styles.container}>
+            <StatusBar backgroundColor={colors.DarkBg} />
             {/* Image Section */}
             <Image
                 source={Icons.DeliveryIcon as ImageSourcePropType}
@@ -26,9 +38,12 @@ const Welcome = () => {
             </View>
 
             {/* Next Button */}
-            <TouchableOpacity style={styles.nextButton}>
-                <Text style={styles.nextButtonText}>Next</Text>
-            </TouchableOpacity>
+            <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: responsiveWidth(45), alignSelf: 'flex-end', marginRight: responsiveWidth(5) }}>
+                <View style={{ borderWidth: 1, borderColor: "#5D81FD", width: responsiveWidth(10), height: 0 }} />
+                <View>
+                    <Text onPress={() => navigation.navigate("SignIn")} style={styles.nextButtonText}>Next</Text>
+                </View>
+            </View>
         </View>
     );
 };
@@ -42,8 +57,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: responsiveWidth(5),
     },
     image: {
-        width: responsiveWidth(50), // 50% of screen width
-        height: responsiveHeight(30), // 30% of screen height
+        width: responsiveWidth(60), // 50% of screen width
+        height: responsiveHeight(40), // 30% of screen height
         resizeMode: 'contain',
         marginBottom: responsiveHeight(5),
     },
@@ -64,23 +79,14 @@ const styles = StyleSheet.create({
         marginBottom: responsiveHeight(2),
     },
     descriptionText: {
-        fontSize: responsiveFontSize(2),
+        fontSize: responsiveFontSize(2.5),
         fontWeight: '400',
         textAlign: 'center',
         color: '#FFFFFF',
     },
-    nextButton: {
-        width: responsiveWidth(30), // 30% of screen width
-        height: responsiveHeight(6), // 6% of screen height
-        backgroundColor: '#FFFFFF', // White button
-        borderRadius: 25,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
     nextButtonText: {
         fontSize: responsiveFontSize(2),
-        fontWeight: '600',
-        color: '#2A2D43', // Dark blue text
+        color: '#FFFFFF',
     },
 });
 

@@ -17,10 +17,10 @@ import {
 import colors from "../../constants/colors";
 import { ScrollView } from "react-native-gesture-handler";
 import Icons from "../../constants/icons";
-import OTPInput from "../../components/OtpInput";
 import { RootStackParamList } from "../../routes/StackNavigator";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
+import OTPInput from "../../components/OTPInput";
 
 type OtpScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

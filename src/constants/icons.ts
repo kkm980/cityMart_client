@@ -12,6 +12,7 @@ const Icons: { [key: string]: string } = {
     LoginScreenIcon: require('../assets/icons/LoginScreenIcon.png'),
     BackArrowIcon: require('../assets/icons/BackArrow.png'),
     DeliveryIcon: require('../assets/icons/DeliveryIcon.png'),
+    Peperomia_Obtusfolia: require('../assets/icons/Peperomia_Obtusfolia.png'),
 }
 
 export default Icons
