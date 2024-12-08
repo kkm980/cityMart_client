@@ -6,6 +6,10 @@ import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-nat
 import { ScrollView } from 'react-native-gesture-handler'
 import Svg, { Path } from 'react-native-svg';
 import Icons from '../constants/icons'
+import Carousel from '../components/Carousel'
+import SearchBar from '../components/SearchBar'
+import Images from '../constants/images'
+import CarouselComponent from '../components/CarouselComponent'
 
 const Home = () => {
 
@@ -60,12 +64,44 @@ const Home = () => {
         <ScrollView style={styles.container} >
             <StatusBar backgroundColor={colors.DarkBg} />
             <Header backgroundColor={colors.PrimaryWhite} />
-            {Array(4).fill(null).map((_, index) => (
-                <View style={styles.row} key={index}>
-                    <Card />
-                    <Card />
-                </View>
-            ))}
+            <View style={{ marginVertical: responsiveWidth(4) }} >
+                <Carousel />
+            </View>
+            <View style={{
+                display: 'flex', flexDirection: 'row',
+                justifyContent: 'space-between', alignItems: 'center',
+                width: responsiveWidth(90), alignSelf: 'center',
+                marginVertical: responsiveHeight(3)
+            }}>
+                <SearchBar containerStyle={{ width: responsiveWidth(75), height: responsiveHeight(6) }} placeholder="Default Search" />
+                <TouchableOpacity  >
+                    <Image source={Icons.FilterIcon as ImageSourcePropType}
+                        style={{
+                            width: responsiveWidth(8),
+                            height: responsiveWidth(6),
+                            resizeMode: 'contain'
+                        }} />
+                </TouchableOpacity>
+            </View>
+
+            <View style={{ width: responsiveWidth(92), alignSelf: 'center' }}>
+                {Array(4).fill(null).map((_, index) => (
+                    <View style={styles.row} key={index}>
+                        <Card />
+                        <Card />
+                    </View>
+                ))}
+            </View>
+            <TouchableOpacity style={{
+                width: responsiveWidth(90),
+                height: responsiveHeight(25),
+                alignSelf: 'center'
+            }} >
+                <Image style={{ width: '100%', height: '100%', resizeMode: 'contain' }} source={Images.InviteBanner as ImageSourcePropType} />
+            </TouchableOpacity>
+
+            <CarouselComponent />
+
         </ScrollView>
     )
 }
@@ -77,7 +113,8 @@ export default Home
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: colors.PrimaryWhite,
+        marginBottom: responsiveHeight(7)
     },
     card: {
         width: responsiveWidth(40), // Fixed width for the card
