@@ -6,13 +6,22 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  TextStyle,
-  ViewStyle,
-  ImageStyle,
+  Image,
+  ImageSourcePropType,
 } from 'react-native';
-import { DrawerContentScrollView, DrawerContentComponentProps } from '@react-navigation/drawer';
-import { responsiveFontSize, responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import {
+  DrawerContentScrollView,
+  DrawerContentComponentProps,
+} from '@react-navigation/drawer';
+import {
+  responsiveFontSize,
+  responsiveHeight,
+  responsiveWidth,
+} from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
+import Icons from '../constants/icons';
+import fonts from '../constants/fonts';
+import colors from '../constants/colors';
 
 // Define navigation type
 type NavigationType = {
@@ -23,30 +32,69 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
   const navigation = useNavigation<NavigationType>();
 
   return (
-    <DrawerContentScrollView {...props} contentContainerStyle={styles.drawerContainer}>
+    <DrawerContentScrollView
+      {...props}
+      contentContainerStyle={styles.drawerContainer}>
+      <Image style={{
+        width: responsiveWidth(40),
+        height: responsiveHeight(40),
+        resizeMode: 'contain',
+        position: 'absolute',
+        top: responsiveHeight(-7),
+        left: 0
+      }}
+        source={Icons.DrawerTopImage as ImageSourcePropType} />
+      <Image style={{
+        width: responsiveWidth(45),
+        height: responsiveHeight(45),
+        resizeMode: 'contain',
+        position: 'absolute',
+        top: responsiveWidth(35),
+        right: responsiveWidth(-4)
+      }}
+        source={Icons.DrawerMiddleImage as ImageSourcePropType} />
+      <Image style={{
+        width: responsiveWidth(35),
+        height: responsiveHeight(35),
+        resizeMode: 'contain',
+        position: 'absolute',
+        bottom: -50,
+        right: -10
+      }}
+        source={Icons.DrawerBottomImage as ImageSourcePropType} />
+
       <SafeAreaView style={styles.safeArea}>
         {/* Close Button */}
-        <TouchableOpacity style={styles.closeButton}>
-          <Text style={styles.closeIcon}>×</Text>
+        <TouchableOpacity style={styles.closeButton} onPress={() => props.navigation.closeDrawer()}>
+          <Image style={{
+            width: responsiveWidth(5),
+            height: responsiveHeight(5),
+            resizeMode: 'contain'
+          }}
+            source={Icons.CrossIcon as ImageSourcePropType} />
         </TouchableOpacity>
 
+
         {/* Menu Items */}
-        <View style={styles.menuItemsContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={styles.menuItem}>
-            <Text style={styles.menuText}>Shop</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.navigate('Community')} style={styles.menuItem}>
-            <Text style={styles.menuText}>Community</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.navigate('MyAccount')} style={styles.menuItem}>
-            <Text style={styles.menuText}>My Account</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={() => navigation.navigate('TrackOrder')} style={styles.menuItem}>
-            <Text style={styles.menuText}>Track Order</Text>
-          </TouchableOpacity>
+        <View>
+          {[
+            { label: 'Shop', screen: 'Shop', image: Icons.ShopIcon },
+            { label: 'Community', screen: 'Community', image: Icons.CommunityIcon },
+            { label: 'My Account', screen: 'MyAccount', image: Icons.MyAccountIcon },
+            { label: 'Track Order', screen: 'TrackOrder', image: Icons.TrackOrderIcon },
+          ].map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => navigation.navigate(item.screen)}
+              style={[styles.menuItem, { marginBottom: item.label == "Shop" ? responsiveHeight(6) : 0 }]}>
+              <Image
+                source={item.image as ImageSourcePropType}
+                style={styles.menuIcon}
+                resizeMode="contain"
+              />
+              <Text style={styles.menuText}>{item.label}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
 
         {/* Email Section */}
@@ -61,69 +109,51 @@ const CustomDrawer: React.FC<DrawerContentComponentProps> = (props) => {
 
         {/* Footer Links */}
         <View style={styles.footerContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('FAQ')} style={styles.footerLink}>
-            <Text style={styles.footerText}>FAQ</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('AboutUs')} style={styles.footerLink}>
-            <Text style={styles.footerText}>ABOUT US</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('ContactUs')} style={styles.footerLink}>
-            <Text style={styles.footerText}>CONTACT US</Text>
-          </TouchableOpacity>
+          {['FAQ', 'About Us', 'Contact Us'].map((label, index) => (
+            <TouchableOpacity
+              key={index}
+              onPress={() => navigation.navigate(label.replace(' ', ''))}
+              style={styles.footerLink}>
+              <Text style={styles.footerText}>{label.toUpperCase()}</Text>
+            </TouchableOpacity>
+          ))}
         </View>
       </SafeAreaView>
     </DrawerContentScrollView>
   );
 };
 
-// Define styles with proper typing
-interface Styles {
-  drawerContainer: ViewStyle;
-  safeArea: ViewStyle;
-  closeButton: ViewStyle;
-  closeIcon: TextStyle;
-  menuItemsContainer: ViewStyle;
-  menuItem: ViewStyle;
-  menuText: TextStyle;
-  emailSection: ViewStyle;
-  emailLabel: TextStyle;
-  emailInput: TextStyle;
-  footerContainer: ViewStyle;
-  footerLink: ViewStyle;
-  footerText: TextStyle;
-}
-
-const styles = StyleSheet.create<Styles>({
+// Define styles
+const styles = StyleSheet.create({
   drawerContainer: {
     flex: 1,
     backgroundColor: '#1E9650', // Green background
   },
   safeArea: {
     flex: 1,
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     paddingBottom: responsiveHeight(2),
   },
   closeButton: {
     alignSelf: 'flex-end',
     padding: responsiveWidth(4),
   },
-  closeIcon: {
-    fontSize: responsiveFontSize(3),
-    color: '#FFFFFF',
-  },
-  menuItemsContainer: {
-    marginTop: responsiveHeight(2),
-  },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: responsiveHeight(2),
-    paddingHorizontal: responsiveWidth(6),
+    paddingHorizontal: responsiveWidth(20),
+  },
+  menuIcon: {
+    width: responsiveWidth(8),
+    height: responsiveWidth(8),
+    marginRight: responsiveWidth(6),
   },
   menuText: {
-    fontSize: responsiveFontSize(2),
-    color: '#FFFFFF',
-    fontWeight: '600',
+    fontSize: responsiveFontSize(2.8),
+    color: colors.PrimaryWhite,
+    fontWeight: 'bold',
+    fontFamily: fonts.POPPINS_EXTRA_BOLD
   },
   emailSection: {
     marginTop: responsiveHeight(4),
@@ -133,16 +163,19 @@ const styles = StyleSheet.create<Styles>({
     fontSize: responsiveFontSize(2.2),
     color: '#FFFFFF',
     fontWeight: 'bold',
-    marginBottom: responsiveHeight(1),
+    fontFamily: fonts.POPPINS_BOLD,
+    marginBottom: responsiveHeight(2),
   },
   emailInput: {
     width: responsiveWidth(80),
-    height: responsiveHeight(5),
+    height: responsiveHeight(7),
     borderWidth: 1,
     borderColor: '#FFFFFF',
     borderRadius: 5,
     paddingHorizontal: responsiveWidth(4),
-    color: '#FFFFFF',
+    color: colors.PrimaryWhite,
+    textAlign: 'center',
+    fontSize: responsiveFontSize(2)
   },
   footerContainer: {
     marginTop: responsiveHeight(4),
@@ -153,7 +186,8 @@ const styles = StyleSheet.create<Styles>({
   },
   footerText: {
     fontSize: responsiveFontSize(1.8),
-    color: '#FFFFFF',
+    color: colors.PrimaryWhite,
+    fontFamily: fonts.POPPINS_BOLD
   },
 });
 

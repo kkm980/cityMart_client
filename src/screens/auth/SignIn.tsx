@@ -61,7 +61,7 @@ const SignIn = () => {
             <Text onPress={() => navigation.navigate('ForgetPassword')} style={styles.forgetPasswordText} >Forget Password?</Text>
 
             {/* Create Account Button */}
-            <TouchableOpacity style={styles.createAccountButton}>
+            <TouchableOpacity onPress={() => navigation.navigate("BottomTabs")} style={styles.createAccountButton}>
                 <Text style={styles.createAccountText}>Login</Text>
             </TouchableOpacity>
 

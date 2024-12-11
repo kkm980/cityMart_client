@@ -12,6 +12,19 @@ const Icons: { [key: string]: string } = {
     LoginScreenIcon: require('../assets/icons/LoginScreenIcon.png'),
     BackArrowIcon: require('../assets/icons/BackArrow.png'),
     DeliveryIcon: require('../assets/icons/DeliveryIcon.png'),
+    Peperomia_Obtusfolia: require('../assets/icons/Peperomia_Obtusfolia.png'),
+    
+    ShopIcon: require('../assets/icons/ShopIcon.png'),
+    TrackOrderIcon: require('../assets/icons/TrackOrderIcon.png'),
+    CommunityIcon: require('../assets/icons/CommunityIcon.png'),
+    MyAccountIcon: require('../assets/icons/MyAccountIcon.png'),
+    CrossIcon: require('../assets/icons/CrossIcon.png'),
+    DrawerTopImage: require('../assets/icons/DrawerTopImage.png'),
+    DrawerMiddleImage: require('../assets/icons/DrawerMiddleImage.png'),
+    DrawerBottomImage: require('../assets/icons/DrawerBottomImage.png'),
+
+    FilterIcon: require('../assets/icons/FilterIcon.png'),
+    SearchIcon: require('../assets/icons/SearchIcon.png'),
 }
 
 export default Icons

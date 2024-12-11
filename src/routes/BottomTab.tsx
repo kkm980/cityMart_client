@@ -6,10 +6,10 @@ import { createBottomTabNavigator, BottomTabBarProps } from '@react-navigation/b
 import { ParamListBase, TabNavigationState, RouteProp } from '@react-navigation/native';
 import Home from '../screens/Home';
 import Profile from '../screens/Profile';
-import Favourites from '../screens/Favourites';
 import Shop from '../screens/Shop';
 import icons from '../constants/icons';
 import { responsiveHeight, responsiveWidth } from 'react-native-responsive-dimensions';
+import CartPage from '../screens/CartPage';
 
 // Define the props for MyTabBar
 type MyTabBarProps = BottomTabBarProps & {
@@ -25,7 +25,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({ state, descriptors, navigation }) =
   // Map tab names to their corresponding icons
   const tabIcons: Record<string, any> = {
     Home: icons.HomeBottomTabIcon,
-    Favourites: icons.FavouriteBottomTabIcon,
+    CartPage: icons.FavouriteBottomTabIcon,
     Shop: icons.ShopBottomTabIcon,
     Profile: icons.ProfileBottomTabIcon,
   };
@@ -75,10 +75,7 @@ const MyTabBar: React.FC<MyTabBarProps> = ({ state, descriptors, navigation }) =
               >
                 <Image
                   source={tabIcons[route.name]}
-                  style={[
-                    styles.icon,
-                    { tintColor: isFocused ? colors.primary : colors.text },
-                  ]}
+                  style={[styles.icon]}
                   resizeMode="contain"
                 />
               </View>
@@ -101,7 +98,7 @@ export function BottomTabs() {
       screenOptions={{ headerShown: false }}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Favourites" component={Favourites} />
+      <Tab.Screen name="CartPage" component={CartPage} />
       <Tab.Screen name="Shop" component={Shop} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
